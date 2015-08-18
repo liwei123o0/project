@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1 //EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml11.dtd" >
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>微博搜索查询</title>
+    <link rel="stylesheet" href="../static/main.css" type="text/css" />
+    <title>ECharts</title>
+</head>
+<body>
+<div id="main">
+        <h1 style="text-align:center">微博搜索</h1>
+            <div id="form-area">
+                <p>请输入搜索词:</p>
+                <form action="/post" method="post">
+                    <table>
+                        <tr>
+                            <td>
+                                <textarea rows="5" cols="40" name="keywords"></textarea>
+                            </td>
+                        </tr>
+                    </table>
+                    <p><button type="submit">提交</button> </p>
+                </form>
+            </div>
+    <div id="entries-area">
+        <h2>搜索内容：</h2>
+        <div class="entry">
+            <table>
+            {% for data in datalist %}
+                转发数:{{data[1]}}  评论数:{{data[2]}}
+                <br>
+                内容:{{data[0]}}<br>
+            {% endfor %}
+            </table>
+        </div>
+    </div>
+</body>
+</html>

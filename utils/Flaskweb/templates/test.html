@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+</head>
+<body>
+    <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+    <div id="main" style="height:400px;"></div>
+</body>
+</html>
+    <!-- ECharts单文件引入 -->
+    <script src="../static/echarts.js"></script>
+    <script src="../static/jquery.js"></script>
+    <script type="text/javascript">
+     //Ajax解析json动态生成图表数据
+	function getBarInfo(){
+	 		var ars1="";//存放绑定echarts数据集合
+			//var loadingDiv = document.getElementById("loading");
+			// 插入loading图
+			//loadingDiv.innerHTML = "<img src='image/loading.gif' />";
+			//loadingDiv.style.display = "";
+			var currentAjax =$.ajax({
+               type: "POST",
+		       url:"mysqlsel",//图表数据来源
+		       data:{},
+		       success: function(data){
+                   var ssnews =data.ssnews.replace("[","").replace("]","").split(',');
+                   var ssbbs =data.ssbbs.replace("[","").replace("]","").split(',');
+                   var sssina =data.sssina.replace("[","").replace("]","").split(',');
+                   var ssweixin =data.ssweixin.replace("[","").replace("]","").split(',');
+                   var sszl =data.sszl.replace("[","").replace("]","").split(',');
+                   loadcharts(ssnews,ssbbs);
+               },
+                error: function(data) {
+					if(currentAjax){currentAjax.abort();}else{alert("加载失败");}
+                }
+            });
+        }
+        getBarInfo();
+        setInterval(getBarInfo,6000000);
+        function loadcharts(ssnews,ssbbs){
+        // 路径配置
+		var fileLocation ='../static';//存放文件路径
+        require.config({
+            paths: {
+                echarts: fileLocation
+            }
+        });
+        // 使用
+        require(
+            [
+                'echarts',
+                'echarts/chart/line', // 使用柱状图就加载bar模块，按需加载
+                'echarts/chart/bar',
+                'echarts/chart/map'
+            ],
+            function (ec) {
+                // 基于准备好的dom，初始化echarts图表
+                var myChart = ec.init(document.getElementById('main')); 
+                
+                var option =  {
+   title: {
+       text: "入库类型排行榜",
+       subtext: "数据来自scrapy",
+       textStyle: {
+           fontWeight: "bold"
+       }
+   },
+   tooltip: {
+       trigger: "item",
+       show: true,
+       borderWidth: 30,
+       showDelay: 20
+   },
+   legend: {
+       data: ["昨天排行", "今天排行"]
+   },
+   toolbox: {
+       show: true,
+       feature: {
+           magicType: {
+               type: ["line", "bar"],
+               show: false
+           },
+           restore: {
+               show: true
+           },
+           saveAsImage: {
+               show: true
+           }
+       },
+       textStyle: {
+           fontWeight: "bold"
+       }
+   },
+   xAxis: [
+       {
+           type: "value",
+           boundaryGap: [0, 0.01]
+       }
+   ],
+   yAxis: [
+       {
+           type: "category",
+           data: ["巴西", "印尼", "美国", "印度", "中国", "世界人口(万)"]
+       }
+   ],
+   series: [
+
+       {
+           name: "昨天排行",
+           type: "bar",
+           itemStyle: {
+                normal: {                   // 系列级个性化，横向渐变填充
+                    label : {
+                        show : true
+                    }
+                }
+            },
+           data: [18203, 23489, 29034, 104970, 131744, 630230]
+       },
+       {
+           name: "今天排行",
+           type: "bar",
+           data: [19325, 23438, 31000, 121594, 134141, 681807]
+       }
+   ]
+};
+                // 为echarts对象加载数据 
+                myChart.setOption(option);
+            }
+        );
+        }
+    </script>

@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+</head>
+<body>
+    <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+    <div id="main" style="height:400px;"></div>
+</body>
+</html>
+    <!-- ECharts单文件引入 -->
+    <script src="../static/echarts.js"></script>
+    <script src="../static/jquery.js"></script>
+    <script type="text/javascript">
+     //Ajax解析json动态生成图表数据
+	function getBarInfo(){
+	 		var ars1="";//存放绑定echarts数据集合
+			//var loadingDiv = document.getElementById("loading");
+			// 插入loading图
+			//loadingDiv.innerHTML = "<img src='image/loading.gif' />";
+			//loadingDiv.style.display = "";
+			var currentAjax =$.ajax({
+               type: "POST",
+		       url:"day30",//图表数据来源
+		       data:{},
+		       success: function(data){
+                   var news30 =data.news30.replace("[","").replace("]","").split(',');
+                   var bbs30 =data.bbs30.replace("[","").replace("]","").split(',');
+                   var sina30 =data.sina30.replace("[","").replace("]","").split(',');
+                   var all30 =data.all30.replace("[","").replace("]","").split(',');
+                   var re=new RegExp("'","gi");
+                   var day30 =data.day30.replace("[","").replace("]","").replace(re,"").split(',');
+                   loadcharts(news30,bbs30,sina30,all30,day30);
+               },
+                error: function(data) {
+					if(currentAjax){currentAjax.abort();}else{alert("加载失败");}
+                }
+            });
+        }
+        getBarInfo();
+        setInterval(getBarInfo,6000000);
+        function loadcharts(news30,bbs30,sina30,all30,day30){
+        // 路径配置
+		var fileLocation ='../static';//存放文件路径
+        require.config({
+            paths: {
+                echarts: fileLocation
+            }
+        });
+        // 使用
+        require(
+            [
+                'echarts',
+                'echarts/chart/line', // 使用柱状图就加载bar模块，按需加载
+                'echarts/chart/bar'
+            ],
+            function (ec) {
+                // 基于准备好的dom，初始化echarts图表
+                var myChart = ec.init(document.getElementById('main')); 
+                
+                var option =  {
+    title : {
+        text: '30天历史入库量'
+    },
+    tooltip : {
+        trigger: 'axis'
+    },
+    legend: {
+        data:['新闻','论坛','微博','总量']
+    },
+    toolbox: {
+        show : true,
+        feature : {
+            dataView : {readOnly:false},
+            restore : {show: true},
+            saveAsImage : {show: true}
+        }
+    },
+    calculable : true,
+    dataZoom : {
+        show : true,
+        realtime : true,
+        start : 79,
+        end : 100
+    },
+    grid :{
+      x1:0,
+      y1:0
+    },
+    xAxis : [
+        {
+            type : 'category',
+            boundaryGap : true,
+            data : day30
+        }
+    ],
+    yAxis : [
+        {
+            type : 'value'
+        }
+    ],
+    series : [
+        {
+        width:30,
+        height:20
+        },
+        {
+            name:'新闻',
+            type:'line',
+            data:news30
+        },
+        {
+            name:'论坛',
+            type:'line',
+            data:bbs30
+        },
+            {
+            name:'微博',
+            type:'line',
+            data:sina30
+        },
+            {
+            name:'总量',
+            type:'line',
+            data:all30
+
+        }
+    ]
+};
+                // 为echarts对象加载数据 
+                myChart.setOption(option);
+            }
+        );
+        }
+    </script>

@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+        <html>
+<head>
+    <meta charset="utf-8">
+    <title>ECharts</title>
+</head>
+<body>
+    <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+    <div id="main" style="height:400px;"></div>
+    <!-- ECharts单文件引入 -->
+    <script src="../static/echarts.js"></script>
+    <script src="../static/jquery.js"></script>
+    <script type="text/javascript">
+    //AJAX请求
+    function getBarInfo(){
+			var currentAjax =$.ajax({
+               type: "POST",
+		       url:"mysql",//图表数据来源
+		       data:{},
+		       success: function(data){
+                   var allday =data.allrkl.replace("[","").replace("]","").split(',');
+                   var allweek =data.allweek.replace("[","").replace("]","").split(',');
+                   var allmonth =data.allmonth.replace("[","").replace("]","").split(',');
+                   loadcharts(allday,allweek,allmonth);
+               },
+                error: function(data) {
+					if(currentAjax){currentAjax.abort();}else{alert("加载失败");}
+                }
+            });
+        }
+        getBarInfo();
+        setInterval(getBarInfo,6000000);
+        function loadcharts(allday,allweek,allmonth){
+        // 路径配置
+		var fileLocation ='../static';//存放文件路径
+        require.config({
+            paths: {
+                echarts: fileLocation
+            }
+        });
+        // 使用
+        require(
+            [
+                'echarts',
+                'echarts/chart/bar', // 使用柱状图就加载bar模块，按需加载
+                'echarts/chart/line'
+            ],
+            function (ec) {
+                // 基于准备好的dom，初始化echarts图表
+                var myChart = ec.init(document.getElementById('main'));
+    var zrColor = require('zrender/tool/color');
+    var colorList = [
+  '#ff7f50','#87cefa','#da70d6','#32cd32','#6495ed',
+  '#ff69b4','#ba55d3','#cd5c5c','#ffa500','#40e0d0'
+    ];
+    var itemStyle = {
+    normal: {
+        color: function(params) {
+          if (params.dataIndex < 0) {
+            // for legend
+            return zrColor.lift(
+              colorList[colorList.length - 1], params.seriesIndex * 0.1
+            );
+          }
+          else {
+            // for bar
+            return zrColor.lift(
+              colorList[params.dataIndex], params.seriesIndex * 0.1
+            );
+          }
+        }
+    }
+};
+   var option = {
+       title: {
+        text: '入库量详情统计'
+    },
+    tooltip: {
+        trigger: 'axis',
+        backgroundColor: 'rgba(255,255,255,0.7)',
+        axisPointer: {
+            type: 'shadow'
+        },
+        formatter: function(params) {
+            // for text color
+            var color = colorList[params[0].dataIndex];
+            var res = '<div style="color:' + color + '">';
+            res += '<strong>' + params[0].name + '入库量</strong>'
+            for (var i = 0, l = params.length; i < l; i++) {
+                res += '<br/>' + params[i].seriesName + ' : ' + params[i].value
+            }
+            res += '</div>';
+            return res;
+        }
+    },
+    legend: {
+        x: 'right',
+        data:['当天','上周','上月']
+    },
+    toolbox: {
+        show: true,
+        orient: 'vertical',
+        y: 'center',
+        feature: {
+            mark: {show: true},
+            dataView: {show: true, readOnly: false},
+            restore: {show: true},
+            saveAsImage: {show: true}
+        }
+    },
+    calculable: true,
+    grid :{
+      x1:0,
+      y1:0
+    },
+    xAxis: [
+        {
+            type: 'category',
+            data: ['新闻', '论坛','微博', '总量']
+        }
+    ],
+    yAxis: [
+        {
+            type: 'value'
+        }
+    ],
+    series: [
+        {
+            name: '当天',
+            type: 'bar',
+            itemStyle: {
+                normal: {                   // 系列级个性化，横向渐变填充
+                    label : {
+                        show : true
+                    }
+                }
+            },
+            data: allday
+        },
+        {
+            name: '上周',
+            type: 'bar',
+            itemStyle: {
+                normal: {                   // 系列级个性化，横向渐变填充
+                    label : {
+                        show : true
+                    }
+                }
+            },
+            data: allweek
+        },
+        {
+            name: '上月',
+            type: 'bar',
+            itemStyle: {
+                normal: {                   // 系列级个性化，横向渐变填充
+                    label : {
+                        show : true
+                    }
+                }
+            },
+            data:allmonth
+        }
+
+    ]
+   };
+
+                // 为echarts对象加载数据 
+                myChart.setOption(option); 
+            }
+        )};
+    </script>
+</body>
+</html>

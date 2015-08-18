@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+</head>
+<body>
+    <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+    <div id="main" style="height:400px;"></div>
+</body>
+</html>
+    <!-- ECharts单文件引入 -->
+    <script src="../static/echarts.js"></script>
+    <script src="../static/jquery.js"></script>
+    <script type="text/javascript">
+     //Ajax解析json动态生成图表数据
+	function getBarInfo(){
+	 		var ars1="";//存放绑定echarts数据集合
+			//var loadingDiv = document.getElementById("loading");
+			// 插入loading图
+			//loadingDiv.innerHTML = "<img src='image/loading.gif' />";
+			//loadingDiv.style.display = "";
+			var currentAjax =$.ajax({
+               type: "POST",
+		       url:"mysqlsel",//图表数据来源
+		       data:{},
+		       success: function(data){
+                   var ssnews =data.ssnews.replace("[","").replace("]","").split(',');
+                   var ssbbs =data.ssbbs.replace("[","").replace("]","").split(',');
+                   var sssina =data.sssina.replace("[","").replace("]","").split(',');
+                   var ssweixin =data.ssweixin.replace("[","").replace("]","").split(',');
+                   var sszl =data.sszl.replace("[","").replace("]","").split(',');
+                   loadcharts(ssnews,ssbbs,sssina,ssweixin,sszl);
+               },
+                error: function(data) {
+					if(currentAjax){currentAjax.abort();}else{alert("加载失败");}
+                }
+            });
+        }
+        getBarInfo();
+        setInterval(getBarInfo,10000);
+        function loadcharts(ssnews,ssbbs,sssina,ssweixin,sszl){
+        // 路径配置
+		var fileLocation ='../static';//存放文件路径
+        require.config({
+            paths: {
+                echarts: fileLocation
+            }
+        });
+        // 使用
+        require(
+            [
+                'echarts',
+                'echarts/chart/line', // 使用柱状图就加载bar模块，按需加载
+                'echarts/chart/bar'
+            ],
+            function (ec) {
+                // 基于准备好的dom，初始化echarts图表
+                var myChart = ec.init(document.getElementById('main')); 
+                
+                var option = {
+    title : {
+        text: '实时入库量'
+    },
+    tooltip : {
+        trigger: 'axis'
+    },
+    legend: {
+        data:['新闻','论坛','微博','微信','总量']
+    },
+    toolbox: {
+        show : true,
+        feature : {
+            mark : {show: true},
+            dataView : {show: true, readOnly: false},
+            magicType : {show: true, type: ['line', 'bar']},
+            restore : {show: true},
+            saveAsImage : {show: true}
+        }
+    },
+    dataZoom : {
+        show : false,
+        start : 0,
+        end : 100
+    },
+    grid :{
+      x1:0,
+      y1:0
+    },
+    xAxis : [
+        {
+            type : 'category',
+            boundaryGap : true,
+            data : (function (){
+                var now = new Date();
+                var res = [];
+                var len = 10;
+                while (len--) {
+                    res.unshift(now.toLocaleTimeString().replace(/^\D*/,''));
+                    now = new Date(now - 600000);
+                }
+                return res;
+            })()
+        }
+    ],
+    yAxis : [
+        {
+            type : 'value',
+            scale: true,
+            name : '入库量',
+            boundaryGap: [0.2, 0.2]
+        }
+
+    ],
+    series : [
+        {
+            name:'新闻',
+            type:'bar',
+            data:ssnews
+        },
+            {
+            name:'论坛',
+            type:'bar',
+            data:ssbbs
+        },
+            {
+            name:'微博',
+            type:'bar',
+            data:sssina
+        },
+            {
+            name:'微信',
+            type:'bar',
+            data:ssweixin
+        },
+            {
+            name:'总量',
+            type:'line',
+            data:sszl
+        }
+    ]
+};
+                // 为echarts对象加载数据 
+                myChart.setOption(option);
+            }
+        );
+        }
+    </script>

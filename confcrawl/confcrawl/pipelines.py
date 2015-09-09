@@ -8,4 +8,5 @@
 
 class ConfcrawlPipeline(object):
     def process_item(self, item, spider):
-        return item
+        print item['title']
+        print "---------------------------------"

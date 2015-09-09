@@ -1,26 +1,31 @@
 # -*- coding: utf-8 -*-
-import scrapy
+from scrapy.spider import Spider,CrawlSpider
 from scrapy.selector import Selector
-import json
+from confcrawl.utils import utils
+from confcrawl.items import ConfcrawlItem
 
-class ExampleSpider(scrapy.Spider):
+class ExampleSpider(Spider):
 
     name = "example"
+    allowed_domains = ["douban.com"]
 
-    def __init__(self):
-        self.load_config()
+    def __init__(self,path=None):
+
+        self.load_config(path)
+
         return  super(ExampleSpider,self).__init__()
 
-    def load_config(self):
+    def load_config(self,path):
 
-        with open("E:\projectall\project\confcrawl\confcrawl\config\example.conf","r")as f:
-            config = f.read()
-        conf = json.loads(config)
-        self.allowed_domains = conf.get("allowed_domains",[])
-        self.start_urls = ["http://www.360doc.com/content/11/1011/14/7472437_155166461.shtml"]
+        ut = utils.utilsconfig()
+        conf = ut.read_config(path)
 
+        # self.allowed_domains = conf.get('domains',[])
+        self.start_urls = conf.get("start_urls",[])
 
     def parse(self, response):
+        item = ConfcrawlItem()
         sel = Selector(response)
-        title = sel.xpath("//title/text()").extract()[0]
-        print title
+        title = "".join(sel.xpath("//title/text()").extract()[0])
+        item["title"] = title
+        return item

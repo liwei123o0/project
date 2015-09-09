@@ -5,9 +5,9 @@ from lxml import etree
 import random
 import os
 import time
-while 1:
+def tast_carhome():
     try:
-        req =urllib2.Request("http://10.6.2.124/conf/yuqing/")
+        req =urllib2.Request("http://10.6.2.124/conf/carhome/")
         html = urllib2.urlopen(req).read()
         dom = etree.HTML(html.decode("utf8"))
         body = dom.xpath("//tr/td/a/text()")
@@ -25,11 +25,14 @@ while 1:
 project=example -d \
 spider=example -d \
 setting=CLOSESPIDER_TIMEOUT=360 -d \
-config=http://10.6.2.124/conf/yuqing/%s"% (str(ip),conf)
+config=http://10.6.2.124/conf/carhome/%s"% (str(ip),conf)
             print task
             os.system(task)
-        print "3分钟后再次分发..."
-        time.sleep(180)
+        print "成功分发！！！"
+
     except:
+        print "异常，等3分钟..."
         time.sleep(180)
-        continue
+        tast_carhome()
+if __name__=="__main__":
+    tast_carhome()

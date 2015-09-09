@@ -6,9 +6,17 @@
 # http://doc.scrapy.org/en/latest/topics/items.html
 
 import scrapy
+from scrapy.item import Item, Field
 
-
-class ConfcrawlItem(scrapy.Item):
+class ConfcrawlItem(Item):
     # define the fields for your item here like:
-    # name = scrapy.Field()
-    pass
+    title = Field()
+
+
+
+class DoubanBookItem(Item):
+    title = Field()
+    author = Field()
+    publisher = Field()
+    category = Field()
+    price = Field()

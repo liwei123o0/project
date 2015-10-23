@@ -13,17 +13,17 @@ u'''
 '''
 class Mysql(object):
 
-    def __init__(self,port=3306,host=u'127.0.0.1',user=u'root',passwd=u'root',db=u''):
+    def __init__(self,port=3306,host=u'127.0.0.1',user=u'root',passwd=u'root',db=u'',charset='utf8'):
 
         self.host = host
         self.user =user
         self.passwd =passwd
         self.db = db
         self.port   =port
-
+        self.charset = charset
     def conDB(self):
         try:
-            self.conn =MySQLdb.connect(host=self.host,user=self.user,passwd=self.passwd,db=self.db,port=self.port)
+            self.conn =MySQLdb.connect(host=self.host,user=self.user,passwd=self.passwd,db=self.db,port=self.port,charset='utf8')
             print self.conn
             self.cur =self.conn.cursor()
             print self.cur

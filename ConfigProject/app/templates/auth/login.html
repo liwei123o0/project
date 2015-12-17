@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% block title %}ConfigProject - Login{% endblock %}
+
+{% block body %}
+<div class="jumbotron">
+    <div class="container">
+        <div class="page-header">
+            <h1>登陆</h1>
+        </div>
+        <div class="container">
+        {% for message in get_flashed_messages() %}
+        <div class="alert alert-warning">
+{#            &times;  注意这个东西#}
+            {{ message }}
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+        </div>
+        {% endfor %}
+        <div class="col-md-4">
+            {{ wtf.quick_form(form) }}
+            <br>
+            <a href="{{ url_for('auth.register') }}">注册</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

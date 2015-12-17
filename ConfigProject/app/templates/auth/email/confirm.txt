@@ -1,0 +1,6 @@
+Dear {{user.username}}
+欢迎您来到我的博客
+请点击一下连接来确认您的帐号：
+{{ url_for('auth.confirm', token=token, _external=True) }}
+
+谢谢！

@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block body %}
+    {{ super() }}
+    <div class="jumbotron">
+        <div class="container">
+
+            <h1>银河数据资源整合</h1>
+            <h2>集监控、大库、小库一体化整合</h2>
+{#            本地化时间处理#}
+            <p>现在时间是： {{ moment(current_time).format('LLLL') }}.</p>
+            <p>停留时间： {{ moment(current_time).fromNow(refresh=True) }}</p>
+{#        flask-login 0.3.0版本以后的书写方式---------------0.2.7版本是current_user.is_authenticated()这样的#}
+            {% if current_user.is_authenticated %}
+            {{ current_user.username }}
+            {% else %}
+               您是未登录用户！
+           {% endif %}
+        <br>
+        <div class="container">
+        {% for message in get_flashed_messages() %}
+        <div class="alert alert-warning">
+{#            &times;  注意这个东西#}
+            {{ message }}
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+        </div>
+        {% endfor %}
+    </div>
+        </div>
+    </div>
+{#    <form class="navbar-form   navbar-text" role="search">#}
+{#        <div class="form-group">#}
+{#            <input type="text" class="form-control" placeholder="你是谁？">#}
+{#        </div>#}
+{#         <button type="submit" class="btn btn-default">提交</button>#}
+{#    </form>#}
+{#    {{ wtf.quick_form(form) }}#}
+{#     <div class="page-header">#}
+{#         <h1>你好，{% if name %}{{ name }}!{% else %}游客!{% endif %}</h1>#}
+{#        {% if not known %}#}
+{#            <p>很高兴第一次见到你！</p>#}
+{#        {% else %}#}
+{#            <p>欢迎您再次来我的博客光临！</p>#}
+{#        {% endif %}#}
+{#     </div>#}
+{% endblock %}

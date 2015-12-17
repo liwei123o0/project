@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+  <head>
+    {% block head %}
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" name="viewport">
+
+
+      <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <title>{% block title %}FlaskBBS{% endblock %}</title>
+
+    <!-- Bootstrap -->
+    <link href="../../static/css/bootstrap.min.css" rel="stylesheet">
+    <link type="text/css" href="http://plugin.bang5mai.com/assets/main/modules/adv/css/b5m.adv.all.css" rel="stylesheet">
+    <script type="text/javascript" id="b5mmain" charset="utf-8" src="http://plugin.bang5mai.com/assets/main/js/b5m.main.js?v=20150910&amp;version=6.0.5.2&amp;uuid=76c2d7efbba1a114fc12b8139f5d379f&amp;source=15206&amp;acd=1&amp;reason=99&amp;_lv=15&amp;cs=6ef53a0372cc8e1fc9230b708d349886"></script>
+
+    {% endblock %}
+  </head>
+  <body  role="document">
+
+  {% block navbar %}
+ <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button aria-controls="navbar" aria-expanded="false" data-target="#navbar" data-toggle="collapse" class="navbar-toggle collapsed" type="button">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a href="#" class="navbar-brand">项目实战</a>
+        </div>
+        <div class="navbar-collapse collapse" id="navbar">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="/">主页</a></li>
+            <li><a href="#about">作者</a></li>
+            <li><a href="#contact">内容</a></li>
+
+            <li class="dropdown">
+              <a aria-expanded="false" aria-haspopup="true" role="button" data-toggle="dropdown" class="dropdown-toggle" href="#">程序语言<span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li><a href="#">Python基础</a></li>
+                <li><a href="#">PythonWeb</a></li>
+                <li><a href="#">Python爬虫</a></li>
+                <li class="divider" role="separator"></li>
+                <li><a href="#">Java</a></li>
+                <li><a href="#">JavaWeb</a></li>
+                <li><a href="#">Java爬虫</a></li>
+              </ul>
+            </li>
+          </ul>
+            <ul class="nav navbar-nav navbar-right">
+            {% if current_user.is_authenticated %}
+            <li><a href="{{ url_for('auth.logout') }}">登出</a></li>
+            {% else %}
+            <li><a href="{{ url_for('auth.login') }}">登陆</a></li>
+            {% endif %}
+            </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="../../static/js/bootstrap.min.js"></script>
+    {{ moment.include_moment() }}
+    {{ moment.lang('zh-cn') }}
+    {% block scripts %}{% endblock %}
+  {% endblock %}
+  {% block body %}
+  {% endblock %}
+  </body>
+</html>

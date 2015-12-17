@@ -1,0 +1,11 @@
+[INFO  - 2015-10-19T08:01:50.338Z] GhostDriver - Main - running on port 59110
+[INFO  - 2015-10-19T08:01:50.954Z] Session [a7759d10-7637-11e5-8ce3-b9724843dee8] - page.settings - {"XSSAuditingEnabled":false,"javascriptCanCloseWindows":true,"javascriptCanOpenWindows":true,"javascriptEnabled":true,"loadImages":true,"localToRemoteUrlAccessEnabled":false,"userAgent":"Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/538.1 (KHTML, like Gecko) PhantomJS/2.0.0 Safari/538.1","webSecurityEnabled":true}
+[INFO  - 2015-10-19T08:01:50.955Z] Session [a7759d10-7637-11e5-8ce3-b9724843dee8] - page.customHeaders:  - {}
+[INFO  - 2015-10-19T08:01:50.955Z] Session [a7759d10-7637-11e5-8ce3-b9724843dee8] - Session.negotiatedCapabilities - {"browserName":"phantomjs","version":"2.0.0","driverName":"ghostdriver","driverVersion":"1.2.0","platform":"windows-7-32bit","javascriptEnabled":true,"takesScreenshot":true,"handlesAlerts":false,"databaseEnabled":false,"locationContextEnabled":false,"applicationCacheEnabled":false,"browserConnectionEnabled":false,"cssSelectorsEnabled":true,"webStorageEnabled":false,"rotatable":false,"acceptSslCerts":false,"nativeEvents":true,"proxy":{"proxyType":"direct"}}
+[INFO  - 2015-10-19T08:01:50.955Z] SessionManagerReqHand - _postNewSessionCommand - New Session Created: a7759d10-7637-11e5-8ce3-b9724843dee8
+[INFO  - 2015-10-19T08:03:49.160Z] SessionManagerReqHand - _cleanupWindowlessSessions - Asynchronous Sessions clean-up phase starting NOW
+[INFO  - 2015-10-19T08:08:49.160Z] SessionManagerReqHand - _cleanupWindowlessSessions - Asynchronous Sessions clean-up phase starting NOW
+[INFO  - 2015-10-19T08:13:49.160Z] SessionManagerReqHand - _cleanupWindowlessSessions - Asynchronous Sessions clean-up phase starting NOW
+p phase starting NOW
+[INFO  - 2015-10-19T08:14:07.982Z] SessionManagerReqHand - _cleanupWindowlessSessions - Asynchronous Sessions clean-up phase starting NOW
+[INFO  - 2015-10-19T08:13:12.918Z] SessionManagerReqHand - _cleanupWindowlessSessions - Asynchronous Sessions clean-up phase starting NOW

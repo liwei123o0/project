@@ -16,4 +16,5 @@ html= browser.html.encode("utf-8")
 with open("weibo.txt","w")as w:
     w.write(html)
 #你也可以将它写到文件中，用浏览器打开。
+
 browser.close()

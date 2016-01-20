@@ -11,6 +11,7 @@ dcap["userAgent"] = (
     "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:37.0) Gecko/20100101 Firefox/37.0"
 )
 
+
 def urlall():
     conn = MySQLdb.connect(host="10.6.2.121",port=3306,user="root",passwd="root",charset="utf8")
     cur  =conn.cursor()
@@ -52,11 +53,13 @@ def weixinsearch():
         cur.selDB("INSERT INTO weibo.WEIXIN(SCREEN_NAME,DATE_ISSUE,EVENT_TOPIC,EVENT_DESCR,EVENT_URL,SEARCHED_URL) VALUES ('%s','%s','%s','%s','%s','%s')"%(jxs,date,title,conten,urlconten,url))
     cur.closeDB()
     driver.quit()
-while 1:
-    try:
-        weixinsearch()
-        print "随机休息"
-        time.sleep(random.randint(60,80))
-    except:
-        print "异常"
-        continue
+# while 1:
+#     try:
+#         weixinsearch()
+#         print "随机休息"
+#         time.sleep(random.randint(60,80))
+#     except:
+#         print "异常"
+#         continue
+
+

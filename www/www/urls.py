@@ -19,6 +19,6 @@ from apps.views import *
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^index/$',index),
+    url(r'^$',index,name=''),
     url(r'^add/$',add),
 ]

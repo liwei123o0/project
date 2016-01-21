@@ -28,7 +28,7 @@ class Pserson(models.Model):
 
     fist_name = models.CharField(u'别名',max_length=50)
     last_name = models.CharField(u'全名',max_length=50)
-
+    #列表页提供自定义显示
     def my_person(self):
         return self.fist_name + ' '+self.last_name
     my_person.short_description = u'全称名字'

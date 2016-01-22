@@ -2,6 +2,7 @@
 #! /usr/bin/env python
 from django.shortcuts import render
 from django.http import HttpResponse
+
 from .apps import Addform
 # Create your views here.
 
@@ -22,4 +23,3 @@ def add(request):
     a = request.GET['a']
     b = request.GET['b']
     return HttpResponse(str(int(a)+int(b)))
-

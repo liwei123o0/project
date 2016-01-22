@@ -15,6 +15,10 @@ class Column(models.Model):
     name = models.CharField(u'栏目名称',max_length=255)
     slug = models.CharField(u'栏目网址',max_length=255)
     intro = models.TextField(u'栏目简介',default='')
+
+    nav_display = models.BooleanField(u'导航显示',default=False)
+    home_display = models.BooleanField(u'首页显示',default=False)
+
     #获取网址方法
     def get_absolute_url(self):
         return reverse('column',args=(self.slug,))
@@ -46,9 +50,9 @@ class Article(models.Model):
 
     pub_date = models.DateTimeField(u'发表时间',auto_now=True,editable=True)
     update_time = models.DateTimeField(u'更新时间',auto_now=True,null=True)
-
-    def get_absolute(self):
-        return reverse('article',args=(self.slug,))
+    #动态获取网址
+    def get_absolute_url(self):
+        return reverse('article',args=(self.pk,self.slug,))
 
     def __str__(self):
         return self.title

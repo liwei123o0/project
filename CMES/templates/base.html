@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{% block title %}欢迎光临{% endblock title %} -Django</title>
+    <title>{% block title %}欢迎光临{% endblock title %} - 我的Django应用</title>
    
     <!-- Bootstrap -->
     <link href="http://apps.bdimg.com/libs/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet">
@@ -15,6 +15,11 @@
       <script src="http://apps.bdimg.com/libs/html5shiv/3.7/html5shiv.min.js"></script>
       <script src="http://apps.bdimg.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+    <style type="text/css">
+    body {
+        padding-top: 60px;
+    }
+    </style>
     {% block css %}
          
     {% endblock css %}
@@ -24,12 +29,46 @@
     {% endblock js %}
   </head>
   <body>
+    <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
     <div>
+      <div>
+         <button type="button" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"> 
+         <span>Toggle navigation</span>
+         <span></span>
+         <span></span>
+         <span></span>
+         </button> 
+         <span><a href="/">我的django应用</a></span>
+      </div>
+ 
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav">
+          {% for column in nav_display_columns %}
+              <li><a href="{{ column.get_absolute_url }}">{{ column.name }}</a></li>
+          {% endfor %}
+        </ul>
+    </div>
+    </nav>
+ 
+    <div class="row clearfix">
         <div>
             {% block content %}
-            <h1>今日说法 新闻网</h1>
+                <h1>Django 新闻网</h1>
             {% endblock content %}
         </div>
+    </div>
+ 
+    <div class="row clearfix" style="padding-top: 20px;">
+      <div>
+       <div class="well well-sm">
+        <div style="text-align:center;">
+         <a href="/aboutus/disclaimer.html">免责声明</a> |
+         <a href="/aboutus/index.html">关于我们</a>
+        </div> 
+
+        </div>
+       </div>
+      </div>
     </div>
    
     <script src="http://apps.bdimg.com/libs/jquery/1.11.1/jquery.min.js"></script>

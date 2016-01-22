@@ -30,7 +30,8 @@ urlpatterns = [
     url(r'^$',index,name='index'),
     #生成相关网址
     url(r'^column/(?P<column_slug>[^/]+)/$',column_detail,name='column'),
-    url(r'^news/(?P<article_slug>[^/]+)/$',article_detail,name='article'),
+    #内容根据ID及网址来生成
+    url(r'^news/(?P<pk>\d+)/(?P<article_slug>[^/]+)/$',article_detail,name='article'),
 ]
 
 if settings.DEBUG:

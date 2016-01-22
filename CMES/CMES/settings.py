@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'CRM',
+    'CMS',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -51,7 +51,7 @@ MIDDLEWARE_CLASSES = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'CRMS.urls'
+ROOT_URLCONF = 'CMES.urls'
 
 TEMPLATES = [
     {
@@ -69,7 +69,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'CRMS.wsgi.application'
+WSGI_APPLICATION = 'CMES.wsgi.application'
 
 
 # Database
@@ -80,7 +80,7 @@ DATABASES = {
         # 'ENGINE': 'django.db.backends.sqlite3',
         # 'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'CRM',
+        'NAME': 'CMS',
         'USER':'root',
         'PASSWORD':'root',
         'HOST':'127.0.0.1',

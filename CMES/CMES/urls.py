@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+#! /usr/bin/env python
 """CRMS URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
@@ -13,9 +15,26 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
-from django.conf.urls import url
+from django.conf.urls import url,include
 from django.contrib import admin
+#内容记事本
+from DjangoUeditor import urls as DjangoUeditor_urls
+#记事本的相关设置
+from  django.conf import settings
+
+from CMS.views import *
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+    url(r'^ueditor/',include(DjangoUeditor_urls)),
+    url(r'^$',index,name='index'),
+    #生成相关网址
+    url(r'^column/(?P<column_slug>[^/]+)/$',column_detail,name='column'),
+    url(r'^news/(?P<article_slug>[^/]+)/$',article_detail,name='article'),
 ]
+
+if settings.DEBUG:
+    from django.conf.urls.static import static
+    urlpatterns +=static(
+        settings.MEDIA_URL,document_root = settings.MEDIA_ROOT
+    )

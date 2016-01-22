@@ -4,13 +4,20 @@ from __future__ import unicode_literals
 
 from django.db import models
 from django.utils.encoding import python_2_unicode_compatible
+#第三方内容编辑框
+from DjangoUeditor.models import UEditorField
 # Create your models here.
+
+from django.core.urlresolvers import reverse
 
 @python_2_unicode_compatible
 class Column(models.Model):
     name = models.CharField(u'栏目名称',max_length=255)
     slug = models.CharField(u'栏目网址',max_length=255)
     intro = models.TextField(u'栏目简介',default='')
+    #获取网址方法
+    def get_absolute_url(self):
+        return reverse('column',args=(self.slug,))
 
     def __str__(self):
         return self.name
@@ -24,17 +31,24 @@ class Column(models.Model):
 
 @python_2_unicode_compatible
 class Article(models.Model):
+    #重点理解
     column = models.ManyToManyField(Column,verbose_name=u'归属栏目')
 
     title = models.CharField(u'标题',max_length=255)
     slug = models.CharField(u'网址',max_length=255,db_index=True)
-
+    #重点理解
     author = models.ForeignKey('auth.User',blank=True,null=True,verbose_name=u'作者')
-    content = models.TextField(u'内容',default='',blank=True)
+    #引入第三方内容编辑框
+    content = UEditorField(u'内容',height=300,width=1000,default=u'',blank=True,
+                           imagePath='uploads/images/',toolbars='besttome',
+                           filePath='uploads/files/')
     published = models.BooleanField(u'正式发布',default=True)
 
     pub_date = models.DateTimeField(u'发表时间',auto_now=True,editable=True)
     update_time = models.DateTimeField(u'更新时间',auto_now=True,null=True)
+
+    def get_absolute(self):
+        return reverse('article',args=(self.slug,))
 
     def __str__(self):
         return self.title

@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+ 
+{% block title %}
+{{ column.title }}
+{% endblock title %}
+ 
+{% block content %}
+{#    {% for column in  columns %}#}
+{#        <li>#}
+{#            <a href="{{ column.get_absolute_url }}"> {{ column.name }} </a>#}
+{#        </li>#}
+{#    {% endfor %}#}
+栏目简介：{{ column.intro }}
+栏目文章列表：
+还需要完善
+{% endblock content %}

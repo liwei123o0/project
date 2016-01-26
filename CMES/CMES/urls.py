@@ -32,8 +32,9 @@ urlpatterns = [
     url(r'^column/(?P<column_slug>[^/]+)/$',column_detail,name='column'),
     #内容根据ID及网址来生成
     url(r'^news/(?P<pk>\d+)/(?P<article_slug>[^/]+)/$',article_detail,name='article'),
+    # url(r'^accounts/', include('users.urls')),
 ]
-
+#有关内容编辑器上传下载等操作的改动
 if settings.DEBUG:
     from django.conf.urls.static import static
     urlpatterns +=static(

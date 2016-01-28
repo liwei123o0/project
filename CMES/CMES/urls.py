@@ -23,6 +23,7 @@ from DjangoUeditor import urls as DjangoUeditor_urls
 from  django.conf import settings
 
 from CMS.views import *
+from ScrapyConfig.views import *
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -32,7 +33,9 @@ urlpatterns = [
     url(r'^column/(?P<column_slug>[^/]+)/$',column_detail,name='column'),
     #内容根据ID及网址来生成
     url(r'^news/(?P<pk>\d+)/(?P<article_slug>[^/]+)/$',article_detail,name='article'),
-    # url(r'^accounts/', include('users.urls')),
+    url(r'^home/$',home,name='home'),
+    url(r'^(?P<lanmu_url>[^/]+)/$', ListLanMu, name='listLM'),
+    url(r'^news/(?P<pk>\d+)/$',ListWZ,name='listWZ'),
 ]
 #有关内容编辑器上传下载等操作的改动
 if settings.DEBUG:

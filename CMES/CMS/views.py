@@ -23,10 +23,9 @@ def column_detail(request,column_slug):
 
 def article_detail(request,pk,article_slug):
     # article = Article.objects.get(slug=article_slug)
-    #
+
     article = Article.objects.get(pk=pk)
-    #判断网址是否修改
+    #判断网址是否修改（重定向）
     if article_slug != article.slug:
         return redirect(article,permanent=True)
     return render(request,'article.html',{'article':article})
-

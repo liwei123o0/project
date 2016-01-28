@@ -1,0 +1,7 @@
+{% extends "base.html" %}
+{% block content %}
+        {#重点wenzhang_set对应models模型类名大小写不区分  查找栏目对应的文章      #}
+        {% for wz in lanmu.wenzhang_set.all %}
+            <a class=""  href="{{ wz.get_absolute_url }}">{{ wz.title|safe }}</a>
+        {% endfor %}
+{% endblock %}

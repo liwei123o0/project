@@ -1,78 +1,29 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{% block title %}欢迎光临{% endblock title %}</title>
-   
-    <!-- Bootstrap -->
-    <link href="http://apps.bdimg.com/libs/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet">
-   
-    <!-- 引入下面两个库让 IE8 支持 HTML5 元素 -->
-    <!-- 警告: Respond.js 通过 file:// 浏览的时候不能正常工作！-->
-    <!--[if lt IE 9]>
-      <script src="http://apps.bdimg.com/libs/html5shiv/3.7/html5shiv.min.js"></script>
-      <script src="http://apps.bdimg.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-    <style type="text/css">
-    body {
-        padding-top: 60px;
-    }
-    </style>
-    {% block css %}
-         
-    {% endblock css %}
- 
-    {% block js %}
-         
-    {% endblock js %}
-  </head>
-  <body>
-    <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
-    <div>
-      <div>
-         <button type="button" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"> 
-         <span>Toggle navigation</span>
-         <span></span>
-         <span></span>
-         <span></span>
-         </button> 
-         <span><a href="/">我的django应用</a></span>
-      </div>
- 
-      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-        <ul class="nav navbar-nav">
-          {% for column in nav_display_columns %}
-              <li><a href="{{ column.get_absolute_url }}">{{ column.name }}</a></li>
-          {% endfor %}
-        </ul>
-    </div>
-    </nav>
- 
-    <div class="row clearfix">
-        <div>
-            {% block content %}
-                <h1>Django 新闻网</h1>
-            {% endblock content %}
-        </div>
-    </div>
- 
-    <div class="row clearfix" style="padding-top: 20px;">
-      <div>
-       <div class="well well-sm">
-        <div style="text-align:center;">
-         <a href="/aboutus/disclaimer.html">免责声明</a> |
-         <a href="/aboutus/index.html">关于我们</a>
-        </div> 
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- 新 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+    <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 
-        </div>
-       </div>
-      </div>
-    </div>
-   
-    <script src="http://apps.bdimg.com/libs/jquery/1.11.1/jquery.min.js"></script>
-    <script src="http://apps.bdimg.com/libs/bootstrap/3.3.0/js/bootstrap.min.js"></script>
-    {% include "baidutongji.html" %}
-  </body>
+    <title>{% block title %}欢迎光临{% endblock title %}</title>
+</head>
+<body>
+    {% block nav %}
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <ul class="nav navbar-nav">
+                        <li class="active"><a class="navbar-brand" href="http://127.0.0.1:9999/home">主页</a></li>
+                    {% for nav in list_nav %}
+                        <li><a class="navbar-brand" href="{{ nav.get_absolute_url }}">{{ nav.name }}</a></li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </nav>
+    {% endblock %}
+    {% block content %}{% endblock %}
+</body>
 </html>

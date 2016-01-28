@@ -3,7 +3,6 @@
 
 from django.shortcuts import render
 from .models import LanMu,WenZhang
-from django.http import HttpResponse
 # Create your views here.
 
 def home(request):
@@ -17,7 +16,6 @@ def ListLanMu(request,lanmu_url):
     LM = LanMu.objects.get(urlLM=lanmu_url)
     return render(request,'lanmu.html',{'lanmu':LM,
                                         })
-
 def ListWZ(request,pk):
 
     WZ = WenZhang.objects.get(pk=pk)
